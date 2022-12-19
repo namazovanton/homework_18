@@ -6,10 +6,10 @@ class DirectorService:
         self.dao = dao
 
     def get_one(self, aid):
-        self.dao.get_one(aid)
+        return self.dao.get_one(aid)
 
     def get_all(self):
-        self.dao.get_all()
+        return self.dao.get_all()
 
     def create(self, data):
         self.dao.create(data)
