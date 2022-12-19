@@ -1,4 +1,5 @@
 from dao.model.movie import Movie
+from flask import request
 
 
 class MovieDAO:
@@ -9,7 +10,17 @@ class MovieDAO:
         return self.session.query(Movie).get(aid)
 
     def get_all(self):
-        return self.session.query(Movie).all()
+        movie_query = self.session.query(Movie).all()
+        director_id = request.args.get("director_id")
+        genre_id = request.args.get("genre_id")
+        year = request.args.get("year")
+        if director_id is not None:
+            movie_query = self.session.query(Movie).filter(Movie.director_id == director_id)
+        if genre_id is not None:
+            movie_query = self.session.query(Movie).filter(Movie.genre_id == genre_id)
+        if year is not None:
+            movie_query = self.session.query(Movie).filter(Movie.year == year)
+        return movie_query
 
     def create(self, data):
         movie = Movie(**data)
